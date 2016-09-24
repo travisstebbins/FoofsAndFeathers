@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FooferGenerator : MonoBehaviour {
+public class PowerUpGenerator : MonoBehaviour {
 
 	// public variables
 	public GameObject powerUpPrefab;
-	public int minWaitTime = 10;
-	public int maxWaitTime = 25;
+	public int minWaitTime = 5;
+	public int maxWaitTime = 15;
 
 	// private variables
 	private int waitTime;
@@ -28,11 +28,7 @@ public class FooferGenerator : MonoBehaviour {
 	void Update () {
 		currentTime = Time.time;
 		if (currentTime - lastSpawnTime >= waitTime) {
-			//Transform trans = new GameObject ().transform;
-			//trans.position = new Vector3 (Random.Range (leftBound.position.x, leftBound.position.x * -1), Random.Range (lowerBound.position.y, lowerBound.position.y * -1), 0);
-			//trans.position = new Vector3 (0, 0, 0);
 			GameObject.Instantiate (powerUpPrefab, new Vector3 (Random.Range (leftBound.position.x, -leftBound.position.x), Random.Range (lowerBound.position.y, -lowerBound.position.y), 0), Quaternion.identity);
-			//Instantiate (fooferPrefab, new Vector3 (Random.Range (leftBound.position.x, leftBound.position.x * -1), Random.Range (lowerBound.position.y, lowerBound.position.y * -1), 0), Quaternion.identity);
 			lastSpawnTime = Time.time;
 			waitTime = Random.Range (minWaitTime, maxWaitTime + 1);
 		}

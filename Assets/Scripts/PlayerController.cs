@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		if (other.gameObject.CompareTag ("Foofer")) {
+		else if (other.gameObject.CompareTag ("Foofer")) {
 			foofers++;
 			GameObject.Destroy (other.gameObject);
 			Debug.Log (foofers);
@@ -74,6 +74,17 @@ public class PlayerController : MonoBehaviour {
 			} else if (CompareTag("Player2")) {
 				uim.setPlayer2Foofers (foofers);
 			}
+		}
+
+		else if (other.gameObject.CompareTag ("PowerUp")) {
+			Debug.Log ("power up triggered");
+			if (CompareTag("Player1")) {
+				gm.PowerUp (1);
+			}
+			else if (CompareTag("Player2")) {
+				gm.PowerUp (2);
+			}
+			GameObject.Destroy (other.gameObject);
 		}
 	}
 

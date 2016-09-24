@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 	// public variables
 	public static GameManager instance = null;
 	public float timeLimit = 180f;
+	public float powerUpDuration = 5f;
+	public float powerUpMaxSpeed = 50f;
 
 	// private variables
 	private GameObject player1;
@@ -17,6 +19,7 @@ public class GameManager : MonoBehaviour {
 	UIManager uim;
 	bool startTimer = false;
 	private float timeRemaining;
+	private int numPowerUps = 1;
 
 	void Awake () {
 		if (instance == null)
@@ -31,6 +34,9 @@ public class GameManager : MonoBehaviour {
 		uim = GameObject.FindGameObjectWithTag ("UIManager").GetComponent<UIManager> ();
 		colorableObjects = GameObject.FindGameObjectsWithTag ("ColorableObject");
 		UpdateAndSetScore ();
+
+		player1 = GameObject.FindGameObjectWithTag ("Player1");
+		player2 = GameObject.FindGameObjectWithTag ("Player2");
 
 		if(EditorSceneManager.GetActiveScene() == EditorSceneManager.GetSceneByName ("main")) {
 			timeRemaining = timeLimit;
@@ -87,6 +93,29 @@ public class GameManager : MonoBehaviour {
 		player1Score--;
 		uim.setPlayer1Score (player1Score);
 		uim.setPlayer2Score (player2Score);
+	}
+
+	public void PowerUp (int player) {
+		StartCoroutine (PowerUpCoroutine (player));
+	}
+
+	IEnumerator PowerUpCoroutine (int player) {
+		int power = Random.Range (0, numPowerUps);
+		switch (power) {
+		case 0:
+			if (player == 1) {
+				float oldMaxSpeed = player1.GetComponent<PlayerController> ().maxSpeed;
+				player1.GetComponent<PlayerController> ().maxSpeed = powerUpMaxSpeed;
+				yield return new WaitForSeconds (powerUpDuration);
+				player1.GetComponent<PlayerController> ().maxSpeed = oldMaxSpeed;
+			} else if (player == 2) {
+				float oldMaxSpeed = player2.GetComponent<PlayerController> ().maxSpeed;
+				player2.GetComponent<PlayerController> ().maxSpeed = powerUpMaxSpeed;
+				yield return new WaitForSeconds (powerUpDuration);
+				player2.GetComponent<PlayerController> ().maxSpeed = oldMaxSpeed;
+			}
+			break;
+		}
 	}
 
 	private void EndGame () {
