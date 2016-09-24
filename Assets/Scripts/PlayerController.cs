@@ -5,7 +5,6 @@ public class PlayerController : MonoBehaviour {
 
 	// public variables
 	public float maxSpeed = 3f;
-	public bool foofed = true;
 	public float foofedParticleEmissionRate = 20f;
 	public float superFoofDuration = 5f;
 
@@ -35,14 +34,6 @@ public class PlayerController : MonoBehaviour {
 		} else if (CompareTag("Player2")) {
 			rb.velocity = new Vector2 (Input.GetAxis ("Horizontal2") * maxSpeed, Input.GetAxis ("Vertical2") * maxSpeed);
 		}
-		if (foofed) {
-			cc.enabled = true;
-			particles.startLifetime = 5;
-			var emission = particles.emission;
-			var rate = emission.rate;
-			rate.constantMax = foofedParticleEmissionRate;
-			emission.rate = rate;
-		}
 	}
 
 	void FixedUpdate () {
@@ -66,7 +57,7 @@ public class PlayerController : MonoBehaviour {
 			Debug.Log (foofers);
 			if (foofers >= 3) {
 				foofers = 0;
-				StartCoroutine (superFoof()):
+				StartCoroutine (superFoof ());
 			}
 		}
 	}
@@ -74,7 +65,19 @@ public class PlayerController : MonoBehaviour {
 	IEnumerator superFoof () {
 		isSuperFoof = true;
 		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player"), LayerMask.NameToLayer ("Foofer"), true);
+		cc.enabled = true;
+		particles.startLifetime = 5;
+		var emission = particles.emission;
+		var rate = emission.rate;
+		rate.constantMax = foofedParticleEmissionRate;
+		emission.rate = rate;
 		yield return new WaitForSeconds (superFoofDuration);
 		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player"), LayerMask.NameToLayer ("Foofer"), false);
+		cc.enabled = false;
+		particles.startLifetime = 2;
+		emission = particles.emission;
+		rate = emission.rate;
+		rate.constantMax = 10;
+		emission.rate = rate;
 	}
 }
