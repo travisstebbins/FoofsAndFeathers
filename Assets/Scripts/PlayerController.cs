@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour {
 	private CircleCollider2D cc;
 	private GameManager gm;
 	private ParticleSystem particles;
-	private bool isSuperFoof = false;
 
 	// private variables
 	int foofers = 0;
@@ -63,7 +62,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	IEnumerator superFoof () {
-		isSuperFoof = true;
 		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player"), LayerMask.NameToLayer ("Foofer"), true);
 		cc.enabled = true;
 		particles.startLifetime = 5;
