@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 	private GameManager gm;
 	private ParticleSystem particles;
 	private bool reversed = false;
+	private bool locked = false;
 
 	// private variables
 	int foofers = 0;
@@ -50,29 +51,31 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.CompareTag ("ColorableObject")) {
 			ColorableObject co = (ColorableObject)other.gameObject.GetComponent<ColorableObject> ();
 			if (CompareTag ("Player1")) {
-				if (!reversed) {
-					if (!co.inColor) {
-						co.setColor ();
-						gm.player1IncrementScore ();
-					}
-				}
-				else {
-					if (co.inColor) {
-						co.setBW ();
-						gm.player2IncrementScore ();
+				if (!locked) {
+					if (!reversed) {
+						if (!co.inColor) {
+							co.setColor ();
+							gm.player1IncrementScore ();
+						}
+					} else {
+						if (co.inColor) {
+							co.setBW ();
+							gm.player2IncrementScore ();
+						}
 					}
 				}
 			} else if (CompareTag ("Player2")) {
-				if (!reversed) {
-					if (co.inColor) {
-						co.setBW ();
-						gm.player2IncrementScore ();
-					}
-				}
-				else {
-					if (!co.inColor) {
-						co.setColor ();
-						gm.player1IncrementScore ();
+				if (!locked) {
+					if (!reversed) {
+						if (co.inColor) {
+							co.setBW ();
+							gm.player2IncrementScore ();
+						}
+					} else {
+						if (!co.inColor) {
+							co.setColor ();
+							gm.player1IncrementScore ();
+						}
 					}
 				}
 			}
@@ -94,7 +97,6 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		else if (other.gameObject.CompareTag ("PowerUp")) {
-			Debug.Log ("power up triggered");
 			if (CompareTag("Player1")) {
 				gm.PowerUp (1);
 			}
@@ -125,5 +127,9 @@ public class PlayerController : MonoBehaviour {
 
 	public void setReversed (bool r) {
 		reversed = r;
+	}
+
+	public void setBlocked (bool l) {
+		locked = l;
 	}
 }

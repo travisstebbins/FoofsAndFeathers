@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	UIManager uim;
 	bool startTimer = false;
 	private float timeRemaining;
-	private int numPowerUps = 4;
+	private int numPowerUps = 5;
 
 	void Awake () {
 		if (instance == null)
@@ -141,6 +141,19 @@ public class GameManager : MonoBehaviour {
 				player1.GetComponent<PlayerController> ().setReversed (true);
 				yield return new WaitForSeconds (powerUpDuration);
 				player1.GetComponent<PlayerController> ().setReversed (false);
+			}
+			break;
+		case 4:
+			if (player == 1) {
+				Debug.Log ("Player 1 blocks player 2 from painting");
+				player2.GetComponent<PlayerController> ().setBlocked (true);
+				yield return new WaitForSeconds (powerUpDuration);
+				player2.GetComponent<PlayerController> ().setBlocked (false);
+			} else if (player == 2) {
+				Debug.Log ("Player 2 blocks player 1 from painting");
+				player1.GetComponent<PlayerController> ().setBlocked (true);
+				yield return new WaitForSeconds (powerUpDuration);
+				player1.GetComponent<PlayerController> ().setBlocked (false);
 			}
 			break;
 		}
