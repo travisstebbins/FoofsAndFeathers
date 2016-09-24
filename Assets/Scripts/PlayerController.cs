@@ -16,14 +16,20 @@ public class PlayerController : MonoBehaviour {
 
 	// private variables
 	int foofers = 0;
+	UIManager uim;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		cc = GetComponent<CircleCollider2D> ();
 		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
+		uim = GameObject.FindGameObjectWithTag ("UIManager").GetComponent<UIManager> ();
 		particles = GetComponent<ParticleSystem> ();
-		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Foofer"), LayerMask.NameToLayer ("BoardIgnoreCollisions"), false);
+		if (CompareTag ("Player1")) {
+			uim.setPlayer1Foofers (foofers);
+		} else if (CompareTag("Player2")) {
+			uim.setPlayer2Foofers (foofers);
+		}
 	}
 	
 	// Update is called once per frame
@@ -62,6 +68,11 @@ public class PlayerController : MonoBehaviour {
 			if (foofers >= 3) {
 				foofers = 0;
 				StartCoroutine (superFoof ());
+			}
+			if (CompareTag ("Player1")) {
+				uim.setPlayer1Foofers (foofers);
+			} else if (CompareTag("Player2")) {
+				uim.setPlayer2Foofers (foofers);
 			}
 		}
 	}
