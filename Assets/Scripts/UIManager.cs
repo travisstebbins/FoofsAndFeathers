@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour {
 	public Text player1FoofersText;
 	public Text player2FoofersText;
 	public Text timeText;
+	public Text endGameText;
 
 	// Use this for initialization
 	void Start () {
@@ -39,5 +40,20 @@ public class UIManager : MonoBehaviour {
 
 	public void setTime (int time) {
 		timeText.text = "" + time;
+	}
+
+	public void EndGame (int winner) {
+		player1ScoreText.enabled = false;
+		player2ScoreText.enabled = false;
+		player1FoofersText.enabled = false;
+		player2FoofersText.enabled = false;
+		timeText.enabled = false;
+		if (winner != 0) {
+			endGameText.text = "Player " + winner + " Wins!";
+		}
+		else {
+			endGameText.text = "It's a tie!";
+		}
+		endGameText.enabled = true;
 	}
 }

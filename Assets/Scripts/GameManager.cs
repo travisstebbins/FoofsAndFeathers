@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
 		if(EditorSceneManager.GetActiveScene() == EditorSceneManager.GetSceneByName ("main")) {
 			timeRemaining = timeLimit;
 			startTimer = true;
-			uim.setTime ((int)timeRemaining);
+			uim.setTime (Mathf.CeilToInt (timeRemaining));
 		}
 	}
 
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
 		if(EditorSceneManager.GetActiveScene() == EditorSceneManager.GetSceneByName ("main")) {
 			timeRemaining = timeLimit;
 			startTimer = true;
-			uim.setTime ((int)timeRemaining);
+			uim.setTime (Mathf.CeilToInt (timeRemaining));
 		}
 	}
 	
@@ -51,9 +51,10 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		if (startTimer) {
 			timeRemaining -= Time.deltaTime;
-			uim.setTime ((int)timeRemaining);
+			uim.setTime (Mathf.CeilToInt (timeRemaining));
 			if (timeRemaining <= 0) {
 				Debug.Log ("Game Over");
+				EndGame ();
 			}
 		}
 	}
@@ -81,10 +82,23 @@ public class GameManager : MonoBehaviour {
 		uim.setPlayer2Score (player2Score);
 	}
 
-	public void player2IncrementScore (){
+	public void player2IncrementScore () {
 		player2Score++;
 		player1Score--;
 		uim.setPlayer1Score (player1Score);
 		uim.setPlayer2Score (player2Score);
+	}
+
+	private void EndGame () {
+		Time.timeScale = 0;
+		if (player1Score > player2Score) {
+			uim.EndGame (1);
+		}
+		else if (player2Score > player1Score) {
+			uim.EndGame (2);
+		}
+		else {
+			uim.EndGame (0);
+		}
 	}
 }
