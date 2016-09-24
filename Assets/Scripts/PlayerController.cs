@@ -43,11 +43,16 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.CompareTag ("ColorableObject")) {
 			ColorableObject co = (ColorableObject)other.gameObject.GetComponent<ColorableObject> ();
 			if (CompareTag ("Player1")) {
-				co.setColor ();
+				if (!co.inColor) {
+					co.setColor ();
+					gm.player1IncrementScore ();
+				}
 			} else if (CompareTag ("Player2")) {
-				co.setBW ();
+				if (co.inColor) {
+					co.setBW ();
+					gm.player2IncrementScore ();
+				}
 			}
-			gm.UpdateAndSetScore ();
 		}
 
 		if (other.gameObject.CompareTag ("Foofer")) {

@@ -53,4 +53,18 @@ public class GameManager : MonoBehaviour {
 		uim.setPlayer1Score (player1Score);
 		uim.setPlayer2Score (player2Score);
 	}
+
+	public void player1IncrementScore () {
+		player1Score++;
+		player2Score--;
+		uim.setPlayer1Score (player1Score);
+		uim.setPlayer2Score (player2Score);
+	}
+
+	public void player2IncrementScore (){
+		player2Score++;
+		player1Score--;
+		uim.setPlayer1Score (player1Score);
+		uim.setPlayer2Score (player2Score);
+	}
 }
