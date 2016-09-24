@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
 	private CircleCollider2D cc;
 	private GameManager gm;
 	private ParticleSystem particles;
+	private bool reversed = false;
 
 	// private variables
 	int foofers = 0;
@@ -49,14 +50,30 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.CompareTag ("ColorableObject")) {
 			ColorableObject co = (ColorableObject)other.gameObject.GetComponent<ColorableObject> ();
 			if (CompareTag ("Player1")) {
-				if (!co.inColor) {
-					co.setColor ();
-					gm.player1IncrementScore ();
+				if (!reversed) {
+					if (!co.inColor) {
+						co.setColor ();
+						gm.player1IncrementScore ();
+					}
+				}
+				else {
+					if (co.inColor) {
+						co.setBW ();
+						gm.player2IncrementScore ();
+					}
 				}
 			} else if (CompareTag ("Player2")) {
-				if (co.inColor) {
-					co.setBW ();
-					gm.player2IncrementScore ();
+				if (!reversed) {
+					if (co.inColor) {
+						co.setBW ();
+						gm.player2IncrementScore ();
+					}
+				}
+				else {
+					if (!co.inColor) {
+						co.setColor ();
+						gm.player1IncrementScore ();
+					}
 				}
 			}
 		}
@@ -104,5 +121,9 @@ public class PlayerController : MonoBehaviour {
 		rate = emission.rate;
 		rate.constantMax = 10;
 		emission.rate = rate;
+	}
+
+	public void setReversed (bool r) {
+		reversed = r;
 	}
 }

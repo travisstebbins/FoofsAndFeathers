@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	UIManager uim;
 	bool startTimer = false;
 	private float timeRemaining;
-	private int numPowerUps = 3;
+	private int numPowerUps = 4;
 
 	void Awake () {
 		if (instance == null)
@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	IEnumerator PowerUpCoroutine (int player) {
+		Random.InitState ((int)System.DateTime.Now.Ticks);
 		int power = Random.Range (0, numPowerUps);
 		switch (power) {
 		case 0:
@@ -128,6 +129,19 @@ public class GameManager : MonoBehaviour {
 			Time.timeScale = 2;
 			yield return new WaitForSecondsRealtime (powerUpDuration);
 			Time.timeScale = 1;
+			break;
+		case 3:
+			if (player == 1) {
+				Debug.Log ("Player 1 reverses player 2's color");
+				player2.GetComponent<PlayerController> ().setReversed (true);
+				yield return new WaitForSeconds (powerUpDuration);
+				player2.GetComponent<PlayerController> ().setReversed (false);
+			} else if (player == 2) {
+				Debug.Log ("Player 2 reverses player 1's color");
+				player1.GetComponent<PlayerController> ().setReversed (true);
+				yield return new WaitForSeconds (powerUpDuration);
+				player1.GetComponent<PlayerController> ().setReversed (false);
+			}
 			break;
 		}
 	}
