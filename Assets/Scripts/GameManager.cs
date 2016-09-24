@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	UIManager uim;
 	bool startTimer = false;
 	private float timeRemaining;
-	private int numPowerUps = 1;
+	private int numPowerUps = 2;
 
 	void Awake () {
 		if (instance == null)
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (startTimer) {
-			timeRemaining -= Time.deltaTime;
+			timeRemaining -= Time.unscaledDeltaTime;
 			uim.setTime (Mathf.CeilToInt (timeRemaining));
 			if (timeRemaining <= 0) {
 				Debug.Log ("Game Over");
@@ -104,16 +104,24 @@ public class GameManager : MonoBehaviour {
 		switch (power) {
 		case 0:
 			if (player == 1) {
+				Debug.Log ("Player 1 speed power up");
 				float oldMaxSpeed = player1.GetComponent<PlayerController> ().maxSpeed;
 				player1.GetComponent<PlayerController> ().maxSpeed = powerUpMaxSpeed;
 				yield return new WaitForSeconds (powerUpDuration);
 				player1.GetComponent<PlayerController> ().maxSpeed = oldMaxSpeed;
 			} else if (player == 2) {
+				Debug.Log ("Player 2 speed power up");
 				float oldMaxSpeed = player2.GetComponent<PlayerController> ().maxSpeed;
 				player2.GetComponent<PlayerController> ().maxSpeed = powerUpMaxSpeed;
 				yield return new WaitForSeconds (powerUpDuration);
 				player2.GetComponent<PlayerController> ().maxSpeed = oldMaxSpeed;
 			}
+			break;
+		case 1:
+			Debug.Log ("Slow down time power up");
+			Time.timeScale = 0.5f;
+			yield return new WaitForSecondsRealtime (powerUpDuration);
+			Time.timeScale = 1;
 			break;
 		}
 	}
