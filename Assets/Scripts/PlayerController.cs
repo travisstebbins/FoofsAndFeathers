@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour {
 
 	// components
 	private Rigidbody2D rb;
+	private GameManager gm;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
+		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
 	}
 	
 	// Update is called once per frame
@@ -29,15 +31,13 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.gameObject.CompareTag ("ColorableObject")) {
-			Debug.Log ("ColorableObject triggered");
 			ColorableObject co = (ColorableObject)other.gameObject.GetComponent<ColorableObject> ();
 			if (CompareTag ("Player1")) {
-				Debug.Log ("co set color");
 				co.setColor ();
 			} else if (CompareTag ("Player2")) {
-				Debug.Log ("co set BW");
 				co.setBW ();
 			}
+			gm.UpdateAndSetScore ();
 		}
 	}
 }
