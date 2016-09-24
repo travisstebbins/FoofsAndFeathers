@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	UIManager uim;
 	bool startTimer = false;
 	private float timeRemaining;
-	private int numPowerUps = 2;
+	private int numPowerUps = 3;
 
 	void Awake () {
 		if (instance == null)
@@ -120,6 +120,12 @@ public class GameManager : MonoBehaviour {
 		case 1:
 			Debug.Log ("Slow down time power up");
 			Time.timeScale = 0.5f;
+			yield return new WaitForSecondsRealtime (powerUpDuration);
+			Time.timeScale = 1;
+			break;
+		case 2:
+			Debug.Log ("Speed up time power up");
+			Time.timeScale = 2;
 			yield return new WaitForSecondsRealtime (powerUpDuration);
 			Time.timeScale = 1;
 			break;
