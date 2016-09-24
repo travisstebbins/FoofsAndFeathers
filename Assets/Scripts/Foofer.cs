@@ -22,24 +22,14 @@ public class Foofer : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D> ();
 		leftBound = GameObject.FindGameObjectWithTag ("LeftBound").GetComponent<Transform> ();
 		lowerBound = GameObject.FindGameObjectWithTag ("LowerBound").GetComponent<Transform> ();
-		//rb.velocity = new Vector2 (Random.Range (-maxSpeed, maxSpeed), Random.Range (-maxSpeed, maxSpeed));
-		//rb.AddForce(new Vector2(Random.Range(-randomVariance, randomVariance), Random.Range(-randomVariance, randomVariance)));
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//rb.AddForce(new Vector2(Random.Range(-randomVariance, randomVariance), Random.Range(-randomVariance, randomVariance)));
-		//rb.velocity = new Vector2 ((Mathf.Abs(rb.velocity.x) > maxSpeed) ?
-		//	rb.velocity.x + Random.Range (-randomVariance, randomVariance) : rb.velocity.x,
-		//	(Mathf.Abs(rb.velocity.y) > maxSpeed ?
-		//		rb.velocity.y + Random.Range (-randomVariance, randomVariance) : rb.velocity.y));
-		//rb.velocity = new Vector2(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
 		if (arrived) {
 			StartCoroutine (NewRandomPoint ());
 		}
 		else {
-			float step = maxSpeed * Time.deltaTime;
-			//transform.position = Vector3.MoveTowards (transform.position, randomPoint, step);
 			Vector3 moveVector = randomPoint - transform.position;
 			rb.AddForce (new Vector3(
 				((rb.velocity.x > maxSpeed) && moveVector.x > 0) ? 
@@ -51,7 +41,6 @@ public class Foofer : MonoBehaviour {
 
 	IEnumerator NewRandomPoint () {
 		randomPoint = new Vector3 (Random.Range (leftBound.position.x, -leftBound.position.x), Random.Range (lowerBound.position.y, -lowerBound.position.y), 0);
-		//transform.position = Vector3.Lerp (transform.position, randomPosition, 1);
 		arrived = false;
 		yield return new WaitForSeconds(1.0f / randomVariance);
 		arrived = true;

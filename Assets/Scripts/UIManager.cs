@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour {
 	public Text player2ScoreText;
 	public Text player1FoofersText;
 	public Text player2FoofersText;
+	public Text timeText;
 
 	// Use this for initialization
 	void Start () {
@@ -34,5 +35,9 @@ public class UIManager : MonoBehaviour {
 
 	public void setPlayer2Foofers (int p2f) {
 		player2FoofersText.text = "Foofers: " + p2f;
+	}
+
+	public void setTime (int time) {
+		timeText.text = "" + time;
 	}
 }

@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
 	// public variables
 	public static GameManager instance = null;
+	public float timeLimit = 180f;
 
 	// private variables
 	private GameObject player1;
@@ -13,6 +15,8 @@ public class GameManager : MonoBehaviour {
 	private int player2Score = 0;
 	GameObject[] colorableObjects;
 	UIManager uim;
+	bool startTimer = false;
+	private float timeRemaining;
 
 	void Awake () {
 		if (instance == null)
@@ -27,15 +31,31 @@ public class GameManager : MonoBehaviour {
 		uim = GameObject.FindGameObjectWithTag ("UIManager").GetComponent<UIManager> ();
 		colorableObjects = GameObject.FindGameObjectsWithTag ("ColorableObject");
 		UpdateAndSetScore ();
+
+		if(EditorSceneManager.GetActiveScene() == EditorSceneManager.GetSceneByName ("main")) {
+			timeRemaining = timeLimit;
+			startTimer = true;
+			uim.setTime ((int)timeRemaining);
+		}
 	}
 
 	void OnLevelWasLoaded () {
-		
+		if(EditorSceneManager.GetActiveScene() == EditorSceneManager.GetSceneByName ("main")) {
+			timeRemaining = timeLimit;
+			startTimer = true;
+			uim.setTime ((int)timeRemaining);
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (startTimer) {
+			timeRemaining -= Time.deltaTime;
+			uim.setTime ((int)timeRemaining);
+			if (timeRemaining <= 0) {
+				Debug.Log ("Game Over");
+			}
+		}
 	}
 
 	public void UpdateAndSetScore () {
