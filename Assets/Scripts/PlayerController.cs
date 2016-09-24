@@ -7,12 +7,17 @@ public class PlayerController : MonoBehaviour {
 	public float maxSpeed = 3f;
 	public bool foofed = true;
 	public float foofedParticleEmissionRate = 20f;
+	public float superFoofDuration = 5f;
 
 	// components
 	private Rigidbody2D rb;
 	private CircleCollider2D cc;
 	private GameManager gm;
 	private ParticleSystem particles;
+	private bool isSuperFoof = false;
+
+	// private variables
+	int foofers = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +25,7 @@ public class PlayerController : MonoBehaviour {
 		cc = GetComponent<CircleCollider2D> ();
 		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
 		particles = GetComponent<ParticleSystem> ();
+		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Foofer"), LayerMask.NameToLayer ("BoardIgnoreCollisions"), false);
 	}
 	
 	// Update is called once per frame
@@ -53,5 +59,22 @@ public class PlayerController : MonoBehaviour {
 			}
 			gm.UpdateAndSetScore ();
 		}
+
+		if (other.gameObject.CompareTag ("Foofer")) {
+			foofers++;
+			GameObject.Destroy (other.gameObject);
+			Debug.Log (foofers);
+			if (foofers >= 3) {
+				foofers = 0;
+				StartCoroutine (superFoof()):
+			}
+		}
+	}
+
+	IEnumerator superFoof () {
+		isSuperFoof = true;
+		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player"), LayerMask.NameToLayer ("Foofer"), true);
+		yield return new WaitForSeconds (superFoofDuration);
+		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player"), LayerMask.NameToLayer ("Foofer"), false);
 	}
 }
