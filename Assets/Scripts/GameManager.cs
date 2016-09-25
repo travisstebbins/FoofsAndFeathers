@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour {
 	UIManager uim;
 	bool startTimer = false;
 	private float timeRemaining;
-	private int numPowerUps = 5;
 	private bool isPaused = false;
 
 	void Awake () {
@@ -103,14 +102,12 @@ public class GameManager : MonoBehaviour {
 		uim.setProgressSlider (player1Score, player2Score);
 	}
 
-	public void PowerUp (int player) {
-		StartCoroutine (PowerUpCoroutine (player));
+	public void PowerUp (int player, int powerUpType) {
+		StartCoroutine (PowerUpCoroutine (player, powerUpType));
 	}
 
-	IEnumerator PowerUpCoroutine (int player) {
-		Random.InitState ((int)System.DateTime.Now.Ticks);
-		int power = Random.Range (0, numPowerUps);
-		switch (power) {
+	IEnumerator PowerUpCoroutine (int player, int powerUpType) {
+		switch (powerUpType) {
 		case 0:
 			if (player == 1) {
 				Debug.Log ("Player 1 speed power up");

@@ -216,11 +216,12 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		else if (other.gameObject.CompareTag ("PowerUp")) {
+			int powerUpType = other.gameObject.GetComponent<PowerUp> ().getPowerUpType ();
 			if (CompareTag("Player1")) {
-				gm.PowerUp (1);
+				gm.PowerUp (1, powerUpType);
 			}
 			else if (CompareTag("Player2")) {
-				gm.PowerUp (2);
+				gm.PowerUp (2, powerUpType);
 			}
 			GameObject.Destroy (other.gameObject);
 		}
