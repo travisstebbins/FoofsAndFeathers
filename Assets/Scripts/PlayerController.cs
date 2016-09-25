@@ -96,24 +96,24 @@ public class PlayerController : MonoBehaviour {
 					}
 				}
 			}
-			if (isSuperFoof && !player2ScaleComplete) {
-				transform.localScale = new Vector3 (transform.localScale.x + player2ScaleSpeed, transform.localScale.y + player2ScaleSpeed, 0);
-				cc.radius = superFoofRadius * (player2MinScale / transform.localScale.x);
-				if (transform.localScale.x >= (player2MinScale * player2ScaleFactor)) {
-					transform.localScale = new Vector3 ((player2MinScale * player2ScaleFactor), (player2MinScale * player2ScaleFactor), 0);
-					cc.radius = superFoofRadius * (player2MinScale / (player2MinScale * player2ScaleFactor));
-					player2ScaleComplete = true;
-				}
-			}
-			else if (!isSuperFoof && !player2ScaleComplete) {
-				transform.localScale = new Vector3 (transform.localScale.x - player2ScaleSpeed, transform.localScale.y - player2ScaleSpeed, 0);
-				cc.radius = superFoofRadius * (player2MinScale / transform.localScale.x);
-				if (transform.localScale.x <= player2MinScale) {
-					transform.localScale = new Vector3 (player2MinScale, player2MinScale, 0);
-					cc.radius = superFoofRadius;
-					player2ScaleComplete = true;
-				}
-			}
+//			if (isSuperFoof && !player2ScaleComplete) {
+//				transform.localScale = new Vector3 (transform.localScale.x + player2ScaleSpeed, transform.localScale.y + player2ScaleSpeed, 0);
+//				cc.radius = superFoofRadius * (player2MinScale / transform.localScale.x);
+//				if (transform.localScale.x >= (player2MinScale * player2ScaleFactor)) {
+//					transform.localScale = new Vector3 ((player2MinScale * player2ScaleFactor), (player2MinScale * player2ScaleFactor), 0);
+//					cc.radius = superFoofRadius * (player2MinScale / (player2MinScale * player2ScaleFactor));
+//					player2ScaleComplete = true;
+//				}
+//			}
+//			if (!isSuperFoof && !player2ScaleComplete) {
+//				transform.localScale = new Vector3 (transform.localScale.x - player2ScaleSpeed, transform.localScale.y - player2ScaleSpeed, 0);
+//				cc.radius = superFoofRadius * (player2MinScale / transform.localScale.x);
+//				if (transform.localScale.x <= player2MinScale) {
+//					transform.localScale = new Vector3 (player2MinScale, player2MinScale, 0);
+//					cc.radius = superFoofRadius;
+//					player2ScaleComplete = true;
+//				}
+//			}
 			Debug.DrawRay (transform.position, new Vector3 (attackRadius, 0, 0));
 			Debug.DrawRay (transform.position, new Vector3 (-attackRadius, 0, 0));
 			Debug.DrawRay (transform.position, new Vector3 (0, attackRadius, 0));
@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour {
 			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("Foofer"), false);
 			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("PowerUp"), false);
 		}
-		else if (CompareTag("Player2")) {
+		if (CompareTag ("Player2")) {
 			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("Foofer"), false);
 			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("PowerUp"), false);
 		}
