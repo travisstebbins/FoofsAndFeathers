@@ -1,28 +1,9 @@
 fileFormatVersion: 2
 guid: 34f7e8c017025d1469b5b19298e354d7
-timeCreated: 1474783594
+timeCreated: 1474790807
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: NeckBird_Idle_SpriteSheet_0
-    21300002: NeckBird_Idle_SpriteSheet_1
-    21300004: NeckBird_Idle_SpriteSheet_2
-    21300006: NeckBird_Idle_SpriteSheet_3
-    21300008: NeckBird_Idle_SpriteSheet_4
-    21300010: NeckBird_Idle_SpriteSheet_5
-    21300012: NeckBird_Idle_SpriteSheet_6
-    21300014: NeckBird_Idle_SpriteSheet_7
-    21300016: NeckBird_Idle_SpriteSheet_8
-    21300018: NeckBird_Idle_SpriteSheet_9
-    21300020: NeckBird_Idle_SpriteSheet_10
-    21300022: NeckBird_Idle_SpriteSheet_11
-    21300024: NeckBird_Idle_SpriteSheet_12
-    21300026: NeckBird_Idle_SpriteSheet_13
-    21300028: NeckBird_Idle_SpriteSheet_14
-    21300030: NeckBird_Idle_SpriteSheet_15
-    21300032: NeckBird_Idle_SpriteSheet_16
-    21300034: NeckBird_Idle_SpriteSheet_17
-    21300036: NeckBird_Idle_SpriteSheet_18
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -49,7 +30,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -57,7 +38,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -67,106 +48,10 @@ TextureImporter:
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings:
-  - buildTarget: Standalone
-    maxTextureSize: 8192
-    textureFormat: -3
-    compressionQuality: 50
-    allowsAlphaSplitting: 0
+  buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: NeckBird_Idle_SpriteSheet_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1024
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NeckBird_Idle_SpriteSheet_1
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 1024
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NeckBird_Idle_SpriteSheet_2
-      rect:
-        serializedVersion: 2
-        x: 2048
-        y: 1024
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NeckBird_Idle_SpriteSheet_3
-      rect:
-        serializedVersion: 2
-        x: 3072
-        y: 1024
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NeckBird_Idle_SpriteSheet_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NeckBird_Idle_SpriteSheet_5
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NeckBird_Idle_SpriteSheet_6
-      rect:
-        serializedVersion: 2
-        x: 2048
-        y: 0
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
   spritePackingTag: 
   userData: 
