@@ -133,7 +133,14 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	IEnumerator SuperFoof () {
-		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player"), LayerMask.NameToLayer ("Foofer"), true);
+		if (CompareTag ("Player1")) {
+			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("Foofer"), true);
+			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("PowerUp"), true);
+		}
+		else if (CompareTag("Player2")) {
+			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("Foofer"), true);
+			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("PowerUp"), true);
+		}
 		cc.enabled = true;
 		particles.startLifetime = 5;
 		var emission = particles.emission;
@@ -141,7 +148,14 @@ public class PlayerController : MonoBehaviour {
 		rate.constantMax = foofedParticleEmissionRate;
 		emission.rate = rate;
 		yield return new WaitForSeconds (superFoofDuration);
-		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player"), LayerMask.NameToLayer ("Foofer"), false);
+		if (CompareTag ("Player1")) {
+			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("Foofer"), false);
+			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("PowerUp"), false);
+		}
+		else if (CompareTag("Player2")) {
+			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("Foofer"), false);
+			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("PowerUp"), false);
+		}
 		cc.enabled = false;
 		particles.startLifetime = 2;
 		emission = particles.emission;
