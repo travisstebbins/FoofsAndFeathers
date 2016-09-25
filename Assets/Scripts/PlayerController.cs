@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 	public float foofedParticleEmissionRate = 20f;
 	public float superFoofDuration = 5f;
 	public float attackDuration = 0.3f;
+	public float attackCooldown = 2.0f;
 	public float attackRadius = 5f;
 	public float attackForceMultiplier = 1000f;
 
@@ -241,10 +242,10 @@ public class PlayerController : MonoBehaviour {
 		attackReady = false;
 		anim.SetBool("isAttacking", true);
 		yield return new WaitForSeconds (attackDuration);
-		isAttacking = false;
-		yield return new WaitForSeconds (3 * attackDuration);
-		attackReady = true;
 		anim.SetBool("isAttacking", false);
+		isAttacking = false;
+		yield return new WaitForSeconds (attackCooldown);
+		attackReady = true;
 	}
 
 	public void decrementFoofers () {
