@@ -9,8 +9,10 @@ public class MainMenuManager : MonoBehaviour {
 	// public variables
 	public GameObject mainMenuDisplay;
 	public GameObject instructionsDisplay;
+	public GameObject powerUpsDisplay;
 	public Button playButton;
 	public Button backButton;
+	public Button powerupsBackButton;
 
 	// Use this for initialization
 	void Start () {
@@ -38,6 +40,18 @@ public class MainMenuManager : MonoBehaviour {
 
 	public void instructionsBack () {
 		instructionsDisplay.SetActive (false);
+		mainMenuDisplay.SetActive (true);
+		playButton.Select ();
+	}
+
+	public void powerUpsButton () {
+		mainMenuDisplay.SetActive (false);
+		powerUpsDisplay.SetActive (true);
+		powerupsBackButton.Select ();
+	}
+
+	public void powerUpsBackButton () {
+		powerUpsDisplay.SetActive (false);
 		mainMenuDisplay.SetActive (true);
 		playButton.Select ();
 	}

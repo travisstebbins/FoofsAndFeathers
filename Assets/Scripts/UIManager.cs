@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour {
 	public Text timeText;
 	public Text endGameText;
 	public Slider progressSlider;
+	public GameObject endGameScreen;
+	public Button endGameQuitButton;
 
 	// Use this for initialization
 	void Start () {
@@ -55,11 +57,13 @@ public class UIManager : MonoBehaviour {
 		player2FoofersText.enabled = false;
 		timeText.enabled = false;
 		if (winner != 0) {
-			endGameText.text = "Player " + winner + " Wins!";
+			endGameText.text = "Player " + winner + " W ins!";
 		}
 		else {
 			endGameText.text = "It's a tie!";
 		}
-		endGameText.enabled = true;
+		endGameScreen.SetActive (true);
+		endGameQuitButton.Select ();
+		//endGameText.enabled = true;
 	}
 }

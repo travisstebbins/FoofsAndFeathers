@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour {
 	public int numFoofersRequired = 3;
 	public GameObject powerUpFeedbackPrefab;
 	public AudioClip[] sounds;
+	public AudioClip[] player1FoofSounds;
+	public AudioClip[] player2FoofSounds;
 
 	// components
 	private Rigidbody2D rb;
@@ -166,6 +168,9 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 		}
+		if (coll.gameObject.CompareTag("Boundary")) {
+			audio.PlayOneShot (sounds [1]);
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
@@ -206,6 +211,12 @@ public class PlayerController : MonoBehaviour {
 			foofers++;
 			anim.SetInteger ("foofers", foofers);
 			audio.PlayOneShot (sounds [0]);
+			if (CompareTag ("Player1")) {
+				audio.PlayOneShot (player1FoofSounds [foofers - 1]);
+			}
+			else if (CompareTag("Player2")) {
+				audio.PlayOneShot(player2FoofSounds[foofers - 1]);
+			}
 			GameObject.Destroy (other.gameObject);
 			Debug.Log (foofers);
 			if (foofers >= numFoofersRequired) {
