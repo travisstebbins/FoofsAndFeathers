@@ -214,6 +214,7 @@ public class PlayerController : MonoBehaviour {
 		rate.constantMax = foofedParticleEmissionRate;
 		emission.rate = rate;
 		anim.SetBool ("isSuperFoof", true);
+		attackReady = false;
 		yield return new WaitForSeconds (superFoofDuration);
 		if (CompareTag ("Player1")) {
 			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("Foofer"), false);
@@ -230,6 +231,7 @@ public class PlayerController : MonoBehaviour {
 		rate.constantMax = 10;
 		emission.rate = rate;
 		anim.SetBool ("isSuperFoof", false);
+		attackReady = true;
 	}
 
 	public void setReversed (bool r) {
