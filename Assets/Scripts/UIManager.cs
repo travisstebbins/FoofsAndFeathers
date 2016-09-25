@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour {
 	public Text player2FoofersText;
 	public Text timeText;
 	public Text endGameText;
+	public Slider progressSlider;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,11 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void setProgressSlider (int p1Score, int p2Score) {
+		float percent = ((float)p1Score) / (p1Score + p2Score);
+		progressSlider.value = percent;
 	}
 
 	public void setPlayer1Score (int p1s) {

@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour {
 		player2Score = player2Total;
 		uim.setPlayer1Score (player1Score);
 		uim.setPlayer2Score (player2Score);
+		uim.setProgressSlider (player1Score, player2Score);
 	}
 
 	public void player1IncrementScore () {
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour {
 		player2Score--;
 		uim.setPlayer1Score (player1Score);
 		uim.setPlayer2Score (player2Score);
+		uim.setProgressSlider (player1Score, player2Score);
 	}
 
 	public void player2IncrementScore () {
@@ -93,6 +95,7 @@ public class GameManager : MonoBehaviour {
 		player1Score--;
 		uim.setPlayer1Score (player1Score);
 		uim.setPlayer2Score (player2Score);
+		uim.setProgressSlider (player1Score, player2Score);
 	}
 
 	public void PowerUp (int player) {
