@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	public float player2ScaleSpeed = 0.01f;
 	public int numFoofersRequired = 3;
 	public GameObject powerUpFeedbackPrefab;
+	public AudioClip[] sounds;
 
 	// components
 	private Rigidbody2D rb;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour {
 	private GameManager gm;
 	private ParticleSystem particles;
 	private Animator anim;
+	private AudioSource audio;
 
 	// private variables
 	int foofers = 0;
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour {
 		uim = GameObject.FindGameObjectWithTag ("UIManager").GetComponent<UIManager> ();
 		particles = GetComponent<ParticleSystem> ();
 		anim = GetComponent<Animator> ();
+		audio = GetComponent<AudioSource> ();
 		if (CompareTag ("Player1")) {
 			uim.setPlayer1Foofers (foofers);
 			facingRight = true;
@@ -202,6 +205,7 @@ public class PlayerController : MonoBehaviour {
 		else if (other.gameObject.CompareTag ("Foofer")) {
 			foofers++;
 			anim.SetInteger ("foofers", foofers);
+			audio.PlayOneShot (sounds [0]);
 			GameObject.Destroy (other.gameObject);
 			Debug.Log (foofers);
 			if (foofers >= numFoofersRequired) {
@@ -218,6 +222,7 @@ public class PlayerController : MonoBehaviour {
 
 		else if (other.gameObject.CompareTag ("PowerUp")) {
 			int powerUpType = other.gameObject.GetComponent<PowerUp> ().getPowerUpType ();
+			audio.PlayOneShot (sounds [0]);
 			if (CompareTag("Player1")) {
 				gm.PowerUp (1, powerUpType);
 			}
