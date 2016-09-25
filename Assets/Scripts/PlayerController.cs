@@ -14,13 +14,14 @@ public class PlayerController : MonoBehaviour {
 	private CircleCollider2D cc;
 	private GameManager gm;
 	private ParticleSystem particles;
-	private bool reversed = false;
-	private bool locked = false;
 
 	// private variables
 	int foofers = 0;
 	UIManager uim;
+	private bool reversed = false;
+	private bool locked = false;
 	bool isAttacking = false;
+	bool attackReady = true;
 
 	// Use this for initialization
 	void Start () {
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour {
 			else {
 				rb.velocity = vel;
 			}
-			if (Input.GetButtonDown("Player1Fire") && !isAttacking) {
+			if (Input.GetButtonDown("Player1Fire") && attackReady) {
 				Debug.Log ("Player 1 fired");
 				StartCoroutine (AttackCooldown ());
 			}
@@ -174,8 +175,11 @@ public class PlayerController : MonoBehaviour {
 
 	IEnumerator AttackCooldown () {
 		isAttacking = true;
+		attackReady = false;
 		yield return new WaitForSeconds (attackDuration);
 		isAttacking = false;
+		yield return new WaitForSeconds (3 * attackDuration);
+		attackReady = true;
 	}
 
 	public void decrementFoofers () {
