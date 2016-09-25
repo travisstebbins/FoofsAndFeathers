@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
 	public float superFoofDuration = 5f;
 	public float attackDuration = 0.3f;
 	public float attackRadius = 5f;
+	public float attackForceMultiplier = 1000f;
 
 	// components
 	private Rigidbody2D rb;
@@ -79,6 +80,8 @@ public class PlayerController : MonoBehaviour {
 				foreach (Collider2D coll in colls) {
 					if (coll.gameObject.CompareTag("Player1")) {
 						coll.gameObject.GetComponent<PlayerController> ().decrementFoofers ();
+						Vector2 force = coll.gameObject.transform.position - transform.position;
+						coll.gameObject.GetComponent<PlayerController> ().getRigidbody ().AddForce (force * attackForceMultiplier);
 						break;
 					}
 				}
@@ -126,6 +129,8 @@ public class PlayerController : MonoBehaviour {
 			if (isAttacking) {
 				if (coll.gameObject.CompareTag ("Player2")) {
 					coll.gameObject.GetComponent<PlayerController> ().decrementFoofers ();
+					Vector2 force = coll.gameObject.transform.position - transform.position;
+					coll.gameObject.GetComponent<PlayerController> ().getRigidbody ().AddForce (force * attackForceMultiplier);
 				}
 			}
 		}
@@ -252,5 +257,9 @@ public class PlayerController : MonoBehaviour {
 		else if (CompareTag("Player2")) {
 			uim.setPlayer2Foofers (foofers);
 		}
+	}
+
+	public Rigidbody2D getRigidbody () {
+		return rb;
 	}
 }
