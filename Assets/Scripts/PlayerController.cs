@@ -178,6 +178,7 @@ public class PlayerController : MonoBehaviour {
 			Debug.Log (foofers);
 			if (foofers >= 3) {
 				foofers = 0;
+				anim.SetInteger ("foofers", foofers);
 				StartCoroutine (SuperFoof ());
 			}
 			if (CompareTag ("Player1")) {
@@ -214,6 +215,7 @@ public class PlayerController : MonoBehaviour {
 		rate.constantMax = foofedParticleEmissionRate;
 		emission.rate = rate;
 		anim.SetBool ("isSuperFoof", true);
+		isAttacking = false;
 		attackReady = false;
 		yield return new WaitForSeconds (superFoofDuration);
 		if (CompareTag ("Player1")) {
@@ -230,8 +232,9 @@ public class PlayerController : MonoBehaviour {
 		rate = emission.rate;
 		rate.constantMax = 10;
 		emission.rate = rate;
-		anim.SetBool ("isSuperFoof", false);
 		attackReady = true;
+		isAttacking = false;
+		anim.SetBool ("isSuperFoof", false);
 	}
 
 	public void setReversed (bool r) {
