@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 	private CircleCollider2D cc;
 	private GameManager gm;
 	private ParticleSystem particles;
+	private Animator anim;
 
 	// private variables
 	int foofers = 0;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
 		uim = GameObject.FindGameObjectWithTag ("UIManager").GetComponent<UIManager> ();
 		particles = GetComponent<ParticleSystem> ();
+		anim = GetComponent<Animator> ();
 		if (CompareTag ("Player1")) {
 			uim.setPlayer1Foofers (foofers);
 			facingRight = true;
@@ -232,10 +234,12 @@ public class PlayerController : MonoBehaviour {
 	IEnumerator AttackCooldown () {
 		isAttacking = true;
 		attackReady = false;
+		anim.SetBool("isAttacking", true);
 		yield return new WaitForSeconds (attackDuration);
 		isAttacking = false;
 		yield return new WaitForSeconds (3 * attackDuration);
 		attackReady = true;
+		anim.SetBool("isAttacking", false);
 	}
 
 	public void decrementFoofers () {
