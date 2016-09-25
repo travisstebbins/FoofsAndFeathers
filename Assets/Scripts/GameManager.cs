@@ -102,14 +102,6 @@ public class GameManager : MonoBehaviour {
 	IEnumerator PowerUpCoroutine (int player) {
 		Random.InitState ((int)System.DateTime.Now.Ticks);
 		int power = Random.Range (0, numPowerUps);
-		if (player == 1) {
-			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("Foofer"), true);
-			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("PowerUp"), true);
-		}
-		else if (player == 2) {
-			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("Foofer"), true);
-			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("PowerUp"), true);
-		}
 		switch (power) {
 		case 0:
 			if (player == 1) {
@@ -164,14 +156,6 @@ public class GameManager : MonoBehaviour {
 				player1.GetComponent<PlayerController> ().setBlocked (false);
 			}
 			break;
-		}
-		if (player == 1) {
-			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("Foofer"), false);
-			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("PowerUp"), false);
-		}
-		else if (player == 2) {
-			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("Foofer"), false);
-			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player2"), LayerMask.NameToLayer ("PowerUp"), false);
 		}
 	}
 
