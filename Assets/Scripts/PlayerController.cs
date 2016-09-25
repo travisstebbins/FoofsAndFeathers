@@ -173,6 +173,7 @@ public class PlayerController : MonoBehaviour {
 
 		else if (other.gameObject.CompareTag ("Foofer")) {
 			foofers++;
+			anim.SetInteger ("foofers", foofers);
 			GameObject.Destroy (other.gameObject);
 			Debug.Log (foofers);
 			if (foofers >= 3) {
@@ -212,6 +213,7 @@ public class PlayerController : MonoBehaviour {
 		var rate = emission.rate;
 		rate.constantMax = foofedParticleEmissionRate;
 		emission.rate = rate;
+		anim.SetBool ("isSuperFoof", true);
 		yield return new WaitForSeconds (superFoofDuration);
 		if (CompareTag ("Player1")) {
 			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("Foofer"), false);
@@ -227,6 +229,7 @@ public class PlayerController : MonoBehaviour {
 		rate = emission.rate;
 		rate.constantMax = 10;
 		emission.rate = rate;
+		anim.SetBool ("isSuperFoof", false);
 	}
 
 	public void setReversed (bool r) {
@@ -251,6 +254,7 @@ public class PlayerController : MonoBehaviour {
 	public void decrementFoofers () {
 		if (foofers > 0) {
 			foofers--;
+			anim.SetInteger ("foofers", foofers);
 		}
 		if (CompareTag("Player1")) {
 			uim.setPlayer1Foofers (foofers);
