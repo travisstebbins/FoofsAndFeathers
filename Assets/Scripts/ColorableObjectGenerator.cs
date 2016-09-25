@@ -20,11 +20,8 @@ public class ColorableObjectGenerator : MonoBehaviour {
 				int y = (int)((((float)j) / (height * resolution)) * image.height);
 				int bwX = (int)((((float)i) / (width * resolution)) * bwImage.width);
 				int bwY = (int)((((float)j) / (height * resolution)) * bwImage.height);
-				//Debug.Log ("(" + x + ", " + y + ")");
-				//Color c = new Color(image.texture.GetPixel (x, y).r, image.texture.GetPixel (x, y).g, image.texture.GetPixel (x, y).b, 1);
 				co.GetComponent<SpriteRenderer> ().color = image.GetPixel(x, y);
 				co.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer> ().color = bwImage.GetPixel (bwX, bwY);
-				//co.GetComponentInChildren<SpriteRenderer> ().color = bwImage.GetPixel (x, y);
 				if (i < (width * resolution / 2)) {
 					co.GetComponent<ColorableObject> ().setBW ();
 				}
