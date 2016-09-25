@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
 
@@ -47,14 +48,14 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-//	void OnLevelWasLoaded () {
-//		if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName ("main")) {
-//			timeRemaining = timeLimit;
-//			startTimer = true;
-//			uim.setTime (Mathf.CeilToInt (timeRemaining));
-//			pauseMenuDisplay = GameObject.FindGameObjectWithTag ("PauseMenu");
-//		}
-//	}
+	void OnLevelWasLoaded () {
+		if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName ("main")) {
+			Debug.Log("main loaded");
+			Debug.Log (EventSystem.current.currentSelectedGameObject);
+			EventSystem.current.CancelInvoke ();
+		}
+		Time.timeScale = 1;
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -185,5 +186,10 @@ public class GameManager : MonoBehaviour {
 		else {
 			uim.EndGame (0);
 		}
+	}
+
+	public void Quit () {
+		SceneManager.LoadScene ("menu");
+		Destroy (this);
 	}
 }

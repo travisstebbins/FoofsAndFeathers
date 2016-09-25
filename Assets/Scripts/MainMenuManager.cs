@@ -9,6 +9,8 @@ public class MainMenuManager : MonoBehaviour {
 	// public variables
 	public GameObject mainMenuDisplay;
 	public GameObject instructionsDisplay;
+	public Button playButton;
+	public Button backButton;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +29,7 @@ public class MainMenuManager : MonoBehaviour {
 	public void Instructions () {
 		mainMenuDisplay.SetActive (false);
 		instructionsDisplay.SetActive (true);
+		backButton.Select ();
 	}
 
 	public void Quit () {
@@ -36,5 +39,6 @@ public class MainMenuManager : MonoBehaviour {
 	public void instructionsBack () {
 		instructionsDisplay.SetActive (false);
 		mainMenuDisplay.SetActive (true);
+		playButton.Select ();
 	}
 }
