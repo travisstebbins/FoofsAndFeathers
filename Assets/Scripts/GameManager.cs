@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
 	bool startTimer = false;
 	private float timeRemaining;
 	private int numPowerUps = 5;
+	private bool isPaused = false;
 
 	void Awake () {
 		if (instance == null)
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (startTimer) {
+		if (startTimer && !isPaused) {
 			timeRemaining -= Time.unscaledDeltaTime;
 			uim.setTime (Mathf.CeilToInt (timeRemaining));
 			if (timeRemaining <= 0) {
@@ -169,9 +170,11 @@ public class GameManager : MonoBehaviour {
 	public void TogglePause () {
 		if (pauseMenuDisplay.GetComponent<PauseMenuManager>().getIsPaused()) {
 			pauseMenuDisplay.GetComponent<PauseMenuManager> ().Resume ();
+			isPaused = false;
 		}
 		else {
 			pauseMenuDisplay.GetComponent<PauseMenuManager> ().Pause ();
+			isPaused = true;
 		}
 	}
 
