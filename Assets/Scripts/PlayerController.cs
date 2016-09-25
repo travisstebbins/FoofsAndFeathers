@@ -6,11 +6,15 @@ public class PlayerController : MonoBehaviour {
 	// public variables
 	public float maxSpeed = 3f;
 	public float foofedParticleEmissionRate = 20f;
+	public float superFoofRadius = 10f;
 	public float superFoofDuration = 5f;
 	public float attackDuration = 0.3f;
 	public float attackCooldown = 2.0f;
 	public float attackRadius = 5f;
 	public float attackForceMultiplier = 1000f;
+	public float player2ScaleFactor = 2f;
+	public float player2ScaleSpeed = 0.01f;
+	public int numFoofersRequired = 3;
 
 	// components
 	private Rigidbody2D rb;
@@ -28,6 +32,9 @@ public class PlayerController : MonoBehaviour {
 	bool attackReady = true;
 	static bool pausePushed = false;
 	private bool facingRight;
+	private bool isSuperFoof = false;
+	private float player2MinScale;
+	private bool player2ScaleComplete = true;
 
 	// Use this for initialization
 	void Start () {
@@ -43,6 +50,8 @@ public class PlayerController : MonoBehaviour {
 		} else if (CompareTag("Player2")) {
 			uim.setPlayer2Foofers (foofers);
 			facingRight = false;
+			player2MinScale = transform.localScale.x;
+			cc.radius = superFoofRadius;
 		}
 	}
 	
@@ -85,6 +94,24 @@ public class PlayerController : MonoBehaviour {
 						coll.gameObject.GetComponent<PlayerController> ().getRigidbody ().AddForce (force * attackForceMultiplier);
 						break;
 					}
+				}
+			}
+			if (isSuperFoof && !player2ScaleComplete) {
+				transform.localScale = new Vector3 (transform.localScale.x + player2ScaleSpeed, transform.localScale.y + player2ScaleSpeed, 0);
+				cc.radius = superFoofRadius * (player2MinScale / transform.localScale.x);
+				if (transform.localScale.x >= (player2MinScale * player2ScaleFactor)) {
+					transform.localScale = new Vector3 ((player2MinScale * player2ScaleFactor), (player2MinScale * player2ScaleFactor), 0);
+					cc.radius = superFoofRadius * (player2MinScale / (player2MinScale * player2ScaleFactor));
+					player2ScaleComplete = true;
+				}
+			}
+			else if (!isSuperFoof && !player2ScaleComplete) {
+				transform.localScale = new Vector3 (transform.localScale.x - player2ScaleSpeed, transform.localScale.y - player2ScaleSpeed, 0);
+				cc.radius = superFoofRadius * (player2MinScale / transform.localScale.x);
+				if (transform.localScale.x <= player2MinScale) {
+					transform.localScale = new Vector3 (player2MinScale, player2MinScale, 0);
+					cc.radius = superFoofRadius;
+					player2ScaleComplete = true;
 				}
 			}
 			Debug.DrawRay (transform.position, new Vector3 (attackRadius, 0, 0));
@@ -176,7 +203,7 @@ public class PlayerController : MonoBehaviour {
 			anim.SetInteger ("foofers", foofers);
 			GameObject.Destroy (other.gameObject);
 			Debug.Log (foofers);
-			if (foofers >= 3) {
+			if (foofers >= numFoofersRequired) {
 				foofers = 0;
 				anim.SetInteger ("foofers", foofers);
 				StartCoroutine (SuperFoof ());
@@ -217,6 +244,8 @@ public class PlayerController : MonoBehaviour {
 		anim.SetBool ("isSuperFoof", true);
 		isAttacking = false;
 		attackReady = false;
+		isSuperFoof = true;
+		player2ScaleComplete = false;
 		yield return new WaitForSeconds (superFoofDuration);
 		if (CompareTag ("Player1")) {
 			Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player1"), LayerMask.NameToLayer ("Foofer"), false);
@@ -234,6 +263,8 @@ public class PlayerController : MonoBehaviour {
 		emission.rate = rate;
 		attackReady = true;
 		isAttacking = false;
+		isSuperFoof = false;
+		player2ScaleComplete = false;
 		anim.SetBool ("isSuperFoof", false);
 	}
 
