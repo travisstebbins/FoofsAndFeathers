@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 		player1 = GameObject.FindGameObjectWithTag ("Player1");
 		player2 = GameObject.FindGameObjectWithTag ("Player2");
 
-		if(EditorSceneManager.GetActiveScene() == EditorSceneManager.GetSceneByName ("main")) {
+		if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName ("main")) {
 			timeRemaining = timeLimit;
 			startTimer = true;
 			uim.setTime (Mathf.CeilToInt (timeRemaining));
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded () {
-		if(EditorSceneManager.GetActiveScene() == EditorSceneManager.GetSceneByName ("main")) {
+		if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName ("main")) {
 			timeRemaining = timeLimit;
 			startTimer = true;
 			uim.setTime (Mathf.CeilToInt (timeRemaining));

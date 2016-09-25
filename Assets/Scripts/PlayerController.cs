@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public float maxSpeed = 3f;
 	public float foofedParticleEmissionRate = 20f;
 	public float superFoofDuration = 5f;
+	public float attackDuration = 0.3f;
 
 	// components
 	private Rigidbody2D rb;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 	// private variables
 	int foofers = 0;
 	UIManager uim;
+	bool isAttacking = false;
 
 	// Use this for initialization
 	void Start () {
@@ -37,14 +39,35 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (CompareTag("Player1")) {
-			rb.velocity = new Vector2 (Input.GetAxis ("Horizontal1") * maxSpeed, Input.GetAxis ("Vertical1") * maxSpeed);
+			Vector2 vel = new Vector2 (Input.GetAxis ("Horizontal1") * maxSpeed, Input.GetAxis ("Vertical1") * maxSpeed);
+			if (isAttacking) {
+				rb.velocity = vel * 3;
+			}
+			else {
+				rb.velocity = vel;
+			}
+			if (Input.GetButtonDown("Player1Fire") && !isAttacking) {
+				Debug.Log ("Player 1 fired");
+				StartCoroutine (AttackCooldown ());
+			}
 		} else if (CompareTag("Player2")) {
 			rb.velocity = new Vector2 (Input.GetAxis ("Horizontal2") * maxSpeed, Input.GetAxis ("Vertical2") * maxSpeed);
+			if (Input.GetButtonDown("Player2Fire") && !isAttacking) {
+				Debug.Log ("Player 2 fired");
+			}
 		}
 	}
 
 	void FixedUpdate () {
 
+	}
+
+	void OnCollisionEnter2D (Collision2D coll) {
+		if (CompareTag("Player1")) {
+			if (coll.gameObject.CompareTag("Player2")) {
+				coll.gameObject.GetComponent<PlayerController> ().decrementFoofers ();
+			}
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
@@ -87,7 +110,7 @@ public class PlayerController : MonoBehaviour {
 			Debug.Log (foofers);
 			if (foofers >= 3) {
 				foofers = 0;
-				StartCoroutine (superFoof ());
+				StartCoroutine (SuperFoof ());
 			}
 			if (CompareTag ("Player1")) {
 				uim.setPlayer1Foofers (foofers);
@@ -107,7 +130,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	IEnumerator superFoof () {
+	IEnumerator SuperFoof () {
 		Physics2D.IgnoreLayerCollision (LayerMask.NameToLayer ("Player"), LayerMask.NameToLayer ("Foofer"), true);
 		cc.enabled = true;
 		particles.startLifetime = 5;
@@ -131,5 +154,21 @@ public class PlayerController : MonoBehaviour {
 
 	public void setBlocked (bool l) {
 		locked = l;
+	}
+
+	IEnumerator AttackCooldown () {
+		isAttacking = true;
+		yield return new WaitForSeconds (attackDuration);
+		isAttacking = false;
+	}
+
+	public void decrementFoofers () {
+		foofers--;
+		if (CompareTag("Player1")) {
+			uim.setPlayer1Foofers (foofers);
+		}
+		else if (CompareTag("Player2")) {
+			uim.setPlayer2Foofers (foofers);
+		}
 	}
 }
