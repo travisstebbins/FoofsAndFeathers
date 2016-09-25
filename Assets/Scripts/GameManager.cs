@@ -113,13 +113,15 @@ public class GameManager : MonoBehaviour {
 				Debug.Log ("Player 1 speed power up");
 				float oldMaxSpeed = player1.GetComponent<PlayerController> ().maxSpeed;
 				player1.GetComponent<PlayerController> ().maxSpeed = powerUpMaxSpeed;
-				yield return new WaitForSeconds (powerUpDuration);
+				player1.GetComponent<PlayerController> ().powerUpFeedback (powerUpType);
+				yield return new WaitForSecondsRealtime (powerUpDuration);
 				player1.GetComponent<PlayerController> ().maxSpeed = oldMaxSpeed;
 			} else if (player == 2) {
 				Debug.Log ("Player 2 speed power up");
 				float oldMaxSpeed = player2.GetComponent<PlayerController> ().maxSpeed;
 				player2.GetComponent<PlayerController> ().maxSpeed = powerUpMaxSpeed;
-				yield return new WaitForSeconds (powerUpDuration);
+				player2.GetComponent<PlayerController> ().powerUpFeedback (powerUpType);
+				yield return new WaitForSecondsRealtime (powerUpDuration);
 				player2.GetComponent<PlayerController> ().maxSpeed = oldMaxSpeed;
 			}
 			break;
@@ -139,12 +141,14 @@ public class GameManager : MonoBehaviour {
 			if (player == 1) {
 				Debug.Log ("Player 1 reverses player 2's color");
 				player2.GetComponent<PlayerController> ().setReversed (true);
-				yield return new WaitForSeconds (powerUpDuration);
+				player2.GetComponent<PlayerController> ().powerUpFeedback (powerUpType);
+				yield return new WaitForSecondsRealtime (powerUpDuration);
 				player2.GetComponent<PlayerController> ().setReversed (false);
 			} else if (player == 2) {
 				Debug.Log ("Player 2 reverses player 1's color");
+				player1.GetComponent<PlayerController> ().powerUpFeedback (powerUpType);
 				player1.GetComponent<PlayerController> ().setReversed (true);
-				yield return new WaitForSeconds (powerUpDuration);
+				yield return new WaitForSecondsRealtime (powerUpDuration);
 				player1.GetComponent<PlayerController> ().setReversed (false);
 			}
 			break;
@@ -152,12 +156,14 @@ public class GameManager : MonoBehaviour {
 			if (player == 1) {
 				Debug.Log ("Player 1 blocks player 2 from painting");
 				player2.GetComponent<PlayerController> ().setBlocked (true);
-				yield return new WaitForSeconds (powerUpDuration);
+				player2.GetComponent<PlayerController> ().powerUpFeedback (powerUpType);
+				yield return new WaitForSecondsRealtime (powerUpDuration);
 				player2.GetComponent<PlayerController> ().setBlocked (false);
 			} else if (player == 2) {
 				Debug.Log ("Player 2 blocks player 1 from painting");
+				player1.GetComponent<PlayerController> ().powerUpFeedback (powerUpType);
 				player1.GetComponent<PlayerController> ().setBlocked (true);
-				yield return new WaitForSeconds (powerUpDuration);
+				yield return new WaitForSecondsRealtime (powerUpDuration);
 				player1.GetComponent<PlayerController> ().setBlocked (false);
 			}
 			break;

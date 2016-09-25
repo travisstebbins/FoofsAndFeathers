@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 	public float player2ScaleFactor = 2f;
 	public float player2ScaleSpeed = 0.01f;
 	public int numFoofersRequired = 3;
+	public GameObject powerUpFeedbackPrefab;
 
 	// components
 	private Rigidbody2D rb;
@@ -303,5 +304,17 @@ public class PlayerController : MonoBehaviour {
 
 	public Rigidbody2D getRigidbody () {
 		return rb;
+	}
+
+	public void powerUpFeedback (int powerUpType) {
+		StartCoroutine (PowerUpFeedbackCoroutine (powerUpType));
+	}
+
+	IEnumerator PowerUpFeedbackCoroutine (int powerUpType) {
+		GameObject feedback = (GameObject)GameObject.Instantiate (powerUpFeedbackPrefab, new Vector3(transform.position.x + 2, transform.position.y + 2), Quaternion.identity, transform);
+		//GameObject feedback = (GameObject)GameObject.Instantiate (powerUpFeedbackPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+		feedback.GetComponent<PowerUpFeedback> ().setPowerUpType (powerUpType);
+		yield return new WaitForSecondsRealtime (gm.powerUpDuration);
+		Destroy (feedback);
 	}
 }
