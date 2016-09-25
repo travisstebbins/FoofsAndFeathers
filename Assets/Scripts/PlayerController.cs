@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour {
 	private bool locked = false;
 	bool isAttacking = false;
 	bool attackReady = true;
+	static bool pausePushed = false;
 
 	// Use this for initialization
 	void Start () {
@@ -41,6 +42,10 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (CompareTag("Player1")) {
+			if (Input.GetButtonDown("Cancel1")) {
+				Debug.Log ("Cancel button pushed");
+				gm.TogglePause ();
+			}
 			Vector2 vel = new Vector2 (Input.GetAxis ("Horizontal1") * maxSpeed, Input.GetAxis ("Vertical1") * maxSpeed);
 			if (isAttacking) {
 				rb.velocity = vel * 3;
@@ -53,6 +58,10 @@ public class PlayerController : MonoBehaviour {
 				StartCoroutine (AttackCooldown ());
 			}
 		} else if (CompareTag("Player2")) {
+			if (Input.GetButtonDown("Cancel2")) {
+				Debug.Log ("Cancel button pushed");
+				gm.TogglePause ();
+			}
 			rb.velocity = new Vector2 (Input.GetAxis ("Horizontal2") * maxSpeed, Input.GetAxis ("Vertical2") * maxSpeed);
 			if (Input.GetButtonDown("Player2Fire") && attackReady) {
 				Debug.Log ("Player 2 fired");
@@ -74,6 +83,20 @@ public class PlayerController : MonoBehaviour {
 			Debug.DrawRay (transform.position, new Vector3 (0, attackRadius, 0));
 			Debug.DrawRay (transform.position, new Vector3 (0, -attackRadius, 0));
 		}
+		if (Input.GetButtonDown("Cancel")) {
+			Debug.Log ("Cancel button pushed");
+			if (!pausePushed) {
+				pausePushed = true;
+				gm.TogglePause ();
+				//StartCoroutine (PauseCoroutine ());
+			}
+		}
+		StartCoroutine (PauseCoroutine ());
+	}
+
+	IEnumerator PauseCoroutine () {
+		yield return new WaitForSeconds (0.1f);
+		pausePushed = false;
 	}
 
 	void FixedUpdate () {

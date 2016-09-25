@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 	public float powerUpMaxSpeed = 50f;
 
 	// private variables
+	private GameObject pauseMenuDisplay;
 	private GameObject player1;
 	private GameObject player2;
 	private int player1Score = 0;
@@ -42,16 +43,18 @@ public class GameManager : MonoBehaviour {
 			timeRemaining = timeLimit;
 			startTimer = true;
 			uim.setTime (Mathf.CeilToInt (timeRemaining));
+			pauseMenuDisplay = GameObject.FindGameObjectWithTag ("PauseMenuManager");
 		}
 	}
 
-	void OnLevelWasLoaded () {
-		if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName ("main")) {
-			timeRemaining = timeLimit;
-			startTimer = true;
-			uim.setTime (Mathf.CeilToInt (timeRemaining));
-		}
-	}
+//	void OnLevelWasLoaded () {
+//		if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName ("main")) {
+//			timeRemaining = timeLimit;
+//			startTimer = true;
+//			uim.setTime (Mathf.CeilToInt (timeRemaining));
+//			pauseMenuDisplay = GameObject.FindGameObjectWithTag ("PauseMenu");
+//		}
+//	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -159,6 +162,15 @@ public class GameManager : MonoBehaviour {
 				player1.GetComponent<PlayerController> ().setBlocked (false);
 			}
 			break;
+		}
+	}
+
+	public void TogglePause () {
+		if (pauseMenuDisplay.GetComponent<PauseMenuManager>().getIsPaused()) {
+			pauseMenuDisplay.GetComponent<PauseMenuManager> ().Resume ();
+		}
+		else {
+			pauseMenuDisplay.GetComponent<PauseMenuManager> ().Pause ();
 		}
 	}
 
