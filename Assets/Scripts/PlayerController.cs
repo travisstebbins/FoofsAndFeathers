@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 	public float foofedParticleEmissionRate = 20f;
 	public float superFoofDuration = 5f;
 	public float attackDuration = 0.3f;
+	public float attackRadius = 5f;
 
 	// components
 	private Rigidbody2D rb;
@@ -53,9 +54,25 @@ public class PlayerController : MonoBehaviour {
 			}
 		} else if (CompareTag("Player2")) {
 			rb.velocity = new Vector2 (Input.GetAxis ("Horizontal2") * maxSpeed, Input.GetAxis ("Vertical2") * maxSpeed);
-			if (Input.GetButtonDown("Player2Fire") && !isAttacking) {
+			if (Input.GetButtonDown("Player2Fire") && attackReady) {
 				Debug.Log ("Player 2 fired");
+				StartCoroutine (AttackCooldown ());
 			}
+			if (isAttacking) {
+				Debug.Log ("about to call Physics2D.OverlapCircle()");
+				Collider2D[] colls = Physics2D.OverlapCircleAll (transform.position, attackRadius);
+				Debug.Log ("Physics2D.OverlapCircle() called");
+				foreach (Collider2D coll in colls) {
+					if (coll.gameObject.CompareTag("Player1")) {
+						coll.gameObject.GetComponent<PlayerController> ().decrementFoofers ();
+						break;
+					}
+				}
+			}
+			Debug.DrawRay (transform.position, new Vector3 (attackRadius, 0, 0));
+			Debug.DrawRay (transform.position, new Vector3 (-attackRadius, 0, 0));
+			Debug.DrawRay (transform.position, new Vector3 (0, attackRadius, 0));
+			Debug.DrawRay (transform.position, new Vector3 (0, -attackRadius, 0));
 		}
 	}
 
