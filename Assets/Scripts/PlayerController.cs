@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
 	bool isAttacking = false;
 	bool attackReady = true;
 	static bool pausePushed = false;
+	private bool facingRight;
 
 	// Use this for initialization
 	void Start () {
@@ -34,8 +35,10 @@ public class PlayerController : MonoBehaviour {
 		particles = GetComponent<ParticleSystem> ();
 		if (CompareTag ("Player1")) {
 			uim.setPlayer1Foofers (foofers);
+			facingRight = true;
 		} else if (CompareTag("Player2")) {
 			uim.setPlayer2Foofers (foofers);
+			facingRight = false;
 		}
 	}
 	
@@ -83,6 +86,12 @@ public class PlayerController : MonoBehaviour {
 			Debug.DrawRay (transform.position, new Vector3 (0, attackRadius, 0));
 			Debug.DrawRay (transform.position, new Vector3 (0, -attackRadius, 0));
 		}
+		if (rb.velocity.x > 0 && !facingRight) {
+			Flip ();
+		}
+		else if (rb.velocity.x < 0 && facingRight) {
+			Flip ();
+		}
 		if (Input.GetButtonDown("Cancel")) {
 			Debug.Log ("Cancel button pushed");
 			if (!pausePushed) {
@@ -92,6 +101,13 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 		StartCoroutine (PauseCoroutine ());
+	}
+
+	void Flip () {
+		Vector2 scale = transform.localScale;
+		scale.x *= -1;
+		transform.localScale = scale;
+		facingRight = !facingRight;
 	}
 
 	IEnumerator PauseCoroutine () {
