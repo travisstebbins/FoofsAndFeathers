@@ -64,8 +64,10 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D coll) {
 		if (CompareTag("Player1")) {
-			if (coll.gameObject.CompareTag("Player2")) {
-				coll.gameObject.GetComponent<PlayerController> ().decrementFoofers ();
+			if (isAttacking) {
+				if (coll.gameObject.CompareTag ("Player2")) {
+					coll.gameObject.GetComponent<PlayerController> ().decrementFoofers ();
+				}
 			}
 		}
 	}
@@ -163,7 +165,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void decrementFoofers () {
-		foofers--;
+		if (foofers > 0) {
+			foofers--;
+		}
 		if (CompareTag("Player1")) {
 			uim.setPlayer1Foofers (foofers);
 		}
